@@ -17,6 +17,8 @@ class RestaurantTest {
     Restaurant restaurant;
     Restaurant R1 = new Restaurant("Amelie's cafe", "Chennai", openingTime, closingTime);
     List<String> order;
+    List<Item> items;
+    List<Item> orderlist;
 
     @BeforeEach
     public void BeforeEach(){
@@ -27,6 +29,12 @@ class RestaurantTest {
         order = new ArrayList<>();
         order.add("Sweet corn soup");
         order.add("Vegetable lasagne");
+
+        items = new ArrayList<>();
+        Item newItem = new Item("Sweet corn soup", 119);
+        items.add(newItem);
+        newItem = new Item("Vegetable lasagne", 269);
+        items.add(newItem);
     }
 
 
@@ -82,36 +90,45 @@ class RestaurantTest {
     @Test
     public void passing_empty_order_should_throw_exception() {
         //order consists of zero items
-        assertThrows(nullOrderException.class, () -> restaurant.getTotal(order));
+        orderlist = new ArrayList<Item>();
+        assertThrows(nullOrderException.class, () -> restaurant.getTotal(orderlist));
     }
 
     @Test
-    public void passing_order_with_only_one_item_should_return_item_order_value() {
+    public void passing_order_with_only_one_item_should_return_item_order_value() throws nullOrderException {
         //order consists of only one item, "Sweet corn soup" priced at
         order.remove("Vegetable lasagne");
-        assertEquals(119, restaurant.getTotal(order));
+        orderlist = restaurant.selectitems(order);
+        assertEquals(119, restaurant.getTotal(orderlist));
     }
 
     @Test
-    public void passing_order_with_more_than_one_items_should_return_total_order_value() {
+    public void passing_order_with_more_than_one_items_should_return_total_order_value() throws nullOrderException {
         //order consists of two item, "Sweet corn soup" priced at 119 and "Vegetable lasagne" priced at 269
-        assertEquals(388, restaurant.getTotal(order));
+        orderlist = restaurant.selectitems(order);
+        assertEquals(388, restaurant.getTotal(orderlist));
     }
 
     @Test
     public void selecting_an_item_from_menu_should_add_item_to_order() {
-
-        List<String> items = new ArrayList<>();
-        items.add("Sweet corn soup");
-        items.add("Vegetable lasagne");
-        assertEquals(order, restaurant.selectitems(items));
+        //selecting and comparing the returned values
+        assertEquals(items.size(), restaurant.selectitems(order).size());
+        assertEquals(items.get(0).getName(), restaurant.selectitems(order).get(0).getName());
+        assertEquals(items.get(0).getPrice(), restaurant.selectitems(order).get(0).getPrice());
     }
 
     @Test
     public void deselecting_an_item_from_menu_should_remove_item_from_order() {
 
-        order.remove("Vegetable lasagne");
-        assertEquals(order, restaurant.deselectitems("Vegetable lasagne"));
+        items.remove(1); //removing the "Vegetable lasagne" from the list
+
+        restaurant.selectitems(order); //selecting items before deselecting items
+        order.remove("Sweet corn soup");
+
+        //deselecting and comparing the returned values
+        assertEquals(items.size(), restaurant.deselectitems(order).size());
+        assertEquals(items.get(0).getName(), restaurant.deselectitems(order).get(0).getName());
+        assertEquals(items.get(0).getPrice(), restaurant.deselectitems(order).get(0).getPrice());
     }
 
 }

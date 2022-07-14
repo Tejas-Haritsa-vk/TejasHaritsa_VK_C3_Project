@@ -82,12 +82,14 @@ public class Restaurant {
         return order;
     }
 
-    public int getTotal(List<Item> order) throws nullOrderException {
+    public int getTotal(List<String> order) throws nullOrderException {
         if (order.isEmpty()) throw new nullOrderException("");
         else{
             int total = 0;
-            for (Item item : order) {
-                total+=item.getPrice();
+            Item newitem;
+            for (String item : order) {
+                newitem = findItemByName(item);
+                total+=newitem.getPrice();
             }
             return total;
         }

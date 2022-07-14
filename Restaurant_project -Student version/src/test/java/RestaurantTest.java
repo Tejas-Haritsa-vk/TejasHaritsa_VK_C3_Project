@@ -18,7 +18,6 @@ class RestaurantTest {
     Restaurant R1 = new Restaurant("Amelie's cafe", "Chennai", openingTime, closingTime);
     List<String> order;
     List<Item> items;
-    List<Item> orderlist;
 
     @BeforeEach
     public void BeforeEach(){
@@ -48,7 +47,7 @@ class RestaurantTest {
         LocalTime currentTime = LocalTime.parse("13:30:00");
         Mockito.when(restaurant.getCurrentTime()).thenReturn(currentTime);
 
-        assertEquals(true, restaurant.isRestaurantOpen());
+        assertTrue(restaurant.isRestaurantOpen());
     }
 
     @Test
@@ -57,7 +56,7 @@ class RestaurantTest {
         LocalTime currentTime = LocalTime.parse("23:30:00");
         Mockito.when(restaurant.getCurrentTime()).thenReturn(currentTime);
 
-        assertEquals(false, restaurant.isRestaurantOpen());
+        assertFalse(restaurant.isRestaurantOpen());
 
     }
 
@@ -90,23 +89,20 @@ class RestaurantTest {
     @Test
     public void passing_empty_order_should_throw_exception() {
         //order consists of zero items
-        orderlist = new ArrayList<Item>();
-        assertThrows(nullOrderException.class, () -> restaurant.getTotal(orderlist));
+        assertThrows(nullOrderException.class, () -> restaurant.getTotal(new ArrayList<>()));
     }
 
     @Test
     public void passing_order_with_only_one_item_should_return_item_order_value() throws nullOrderException {
         //order consists of only one item, "Sweet corn soup" priced at
         order.remove("Vegetable lasagne");
-        orderlist = restaurant.selectitems(order);
-        assertEquals(119, restaurant.getTotal(orderlist));
+        assertEquals(119, restaurant.getTotal(order));
     }
 
     @Test
     public void passing_order_with_more_than_one_items_should_return_total_order_value() throws nullOrderException {
         //order consists of two item, "Sweet corn soup" priced at 119 and "Vegetable lasagne" priced at 269
-        orderlist = restaurant.selectitems(order);
-        assertEquals(388, restaurant.getTotal(orderlist));
+        assertEquals(388, restaurant.getTotal(order));
     }
 
     @Test

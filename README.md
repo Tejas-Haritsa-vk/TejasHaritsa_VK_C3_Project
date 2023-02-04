@@ -1,7 +1,9 @@
 # VK_TejasHaritsa_C3_Project
 iiiT-B Restaurant Finder Application Project Assignment
 
-"Part 2: Solution" contain the solution to Part 2: All methods implemented All test cases pass Repeated code refactored
+"Part 1: " contains the solution to Part 1: All UML & Activity diagrams pertaining to the project
+
+"Part 2: Solution" contain the solution to Part 2: All methods implemented all test cases passed
 
 "Part 3: Failing test case" contain: Failing test cases written for the method/s implemented in part 3.
 

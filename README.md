@@ -1,2 +1,8 @@
-# TejasHaritsa_VK_C3_Project
+# VK_TejasHaritsa_C3_Project
 iiiT-B Restaurant Finder Application Project Assignment
+
+"Part 2: Solution" contain the solution to Part 2: All methods implemented All test cases pass Repeated code refactored
+
+"Part 3: Failing test case" contain: Failing test cases written for the method/s implemented in part 3.
+
+"Part 3: Solution" contain: Implemented feature for calculating order value Passing test cases for the implemented method/s.
